@@ -59,6 +59,7 @@ const Comment = ({
       removeComment(post_id, _id);
     }
   };
+  console.log('test');
   return (
     <Card className={classes.root}>
       <CardContent>
