@@ -11,7 +11,7 @@ import {
 } from "@material-ui/core";
 import Moment from "react-moment";
 
-import { removeComment } from "../actions/program";
+import { removeComment } from "../../programs/actions/program";
 
 const useStyles = makeStyles({
   root: {

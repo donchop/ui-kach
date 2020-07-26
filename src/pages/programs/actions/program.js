@@ -6,6 +6,7 @@ import {
   GET_PROGRAM,
   ADD_COMMENT,
   REMOVE_COMMENT,
+  DELETE_PROGRAM
 } from "../constants/actionTypes";
 
 export const addProgram = (form) => async (dispatch) => {
@@ -46,13 +47,26 @@ export const getProgram = (id) => async (dispatch) => {
 
     dispatch({ type: GET_PROGRAM, payload: res.data });
   } catch (error) {
-    console.log('huy', error);
     const errors = error.response.data.errors;
     if (errors) {
       errors.forEach((error) => dispatch(setAlert(error.msg, "error")));
     }
   }
 };
+
+export const deleteProgram = (id) => async (dispatch) => {
+  try {
+     await axios.delete(`/api/posts/${id}`)
+
+    dispatch({ type: DELETE_PROGRAM, payload: id });
+    dispatch(setAlert("Пограмма тренировок удалена", "success"));
+  } catch (error) {
+    const errors = error.response.data.errors;
+    if (errors) {
+      errors.forEach((error) => dispatch(setAlert(error.msg, "error")));
+    }
+  }
+}
 
 export const addComment = (form, id) => async (dispatch) => {
   const config = {

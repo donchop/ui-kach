@@ -1,5 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
+import { connect } from "react-redux";
 import {
   makeStyles,
   Card,
@@ -10,10 +11,12 @@ import {
   IconButton,
   Box,
 } from "@material-ui/core";
-import { useHistory } from "react-router-dom";
-import Moment from "react-moment";
 import EditIcon from "@material-ui/icons/Edit";
 import DeleteIcon from "@material-ui/icons/Delete";
+import { useHistory } from "react-router-dom";
+import Moment from "react-moment";
+
+import { deleteProgram } from "../actions/program";
 
 const useStyle = makeStyles({
   card: {
@@ -43,7 +46,8 @@ const useStyle = makeStyles({
     marginRight: "auto",
   },
   btnContainer: {
-    justifyContent: "center",
+    justifyContent: "space-evenly",
+    marginBottom: "16px",
   },
   btn: {
     color: "#fff",
@@ -56,11 +60,32 @@ const useStyle = makeStyles({
       background: "#dc3545",
     },
   },
+  editIconContainer: {
+    color: "green",
+  },
+  editIcon: {
+    color: "green",
+  },
+  deleteIconContainer: {
+    color: "red",
+  },
+  deleteIcon: {
+    color: "red",
+  },
 });
 
-const ProgramItem = ({ program }) => {
+const ProgramItem = ({ program, isAuthenticated, deleteProgram, auth }) => {
   const classes = useStyle();
   const history = useHistory();
+
+  const deleteProgramHandler = (id) => {
+    const answer = window.confirm("Удалить программу тренировок?");
+    if (answer) {
+      deleteProgram(id);
+      history.push("/programs/#alert");
+    }
+  };
+
   return (
     <Card className={classes.card}>
       <img className={classes.imageProgram} src={program.imgUrl} alt="" />
@@ -101,13 +126,31 @@ const ProgramItem = ({ program }) => {
         >
           Узнать больше
         </Button>
-     
+        {isAuthenticated && auth.user._id === program.user && (
+          <Box component="div">
+            <IconButton className={classes.editIconContainer}>
+              <EditIcon
+                className={classes.editIcon}
+                onClick={() => history.push(`/editProgram/${program._id}`)}
+              />
+            </IconButton>
+            <IconButton
+              className={classes.deleteIconContainer}
+              onClick={() => deleteProgramHandler(program._id)}
+            >
+              <DeleteIcon className={classes.deleteIcon} />
+            </IconButton>
+          </Box>
+        )}
       </CardActions>
     </Card>
   );
 };
 ProgramItem.propTypes = {
   program: PropTypes.object.isRequired,
+  isAuthenticated: PropTypes.bool.isRequired,
+  deleteProgram: PropTypes.func.isRequired,
+  auth: PropTypes.object.isRequired,
 };
 
-export default ProgramItem;
+export default connect(null, { deleteProgram })(ProgramItem);

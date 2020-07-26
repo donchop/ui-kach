@@ -18,7 +18,7 @@ import AddIcon from "@material-ui/icons/Add";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import Comment from "./Comment";
 import Alert from "../../../components/alert";
-import { getProgram, addComment } from "../actions/program";
+import { getProgram, addComment } from "../../programs/actions/program";
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -198,7 +198,12 @@ const Program = ({
                 {program.text}
               </Typography>
               <CardActions className={classes.commentContainer}>
-                <Button size="small" className={classes.commentsLength} component="a" href="#comments">
+                <Button
+                  size="small"
+                  className={classes.commentsLength}
+                  component="a"
+                  href="#comments"
+                >
                   Комментарии: {program.comments.length}{" "}
                 </Button>
               </CardActions>

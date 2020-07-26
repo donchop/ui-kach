@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import { addProgram } from "../actions/program";
+import { addProgram } from "../../programs/actions/program";
 import {
   TextField,
   makeStyles,

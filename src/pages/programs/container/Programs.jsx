@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, Fragment } from "react";
 import {
   Container,
   Box,
@@ -12,15 +12,16 @@ import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import { useHistory } from "react-router-dom";
 
+import Alert from "../../../components/alert";
 import ProgramItem from "../components/ProgramItem";
 import { getPrograms } from "../actions/program";
 
 const useStyle = makeStyles({
   container: {
     marginTop: "3%",
-    width:"50%",
+    width: "50%",
     "@media (max-width: 1200px)": {
-      width:"100%",
+      width: "100%",
     },
   },
   btnAdd: {
@@ -29,7 +30,7 @@ const useStyle = makeStyles({
     color: "#ff9908",
     "&:hover": {
       border: "2px solid #dc3545",
-      color: "#dc3545", 
+      color: "#dc3545",
     },
   },
   loading: {
@@ -41,6 +42,7 @@ const Programs = ({
   isAuthenticated,
   getPrograms,
   programs: { programs, loading },
+  auth,
 }) => {
   const classes = useStyle();
   const history = useHistory();
@@ -52,25 +54,33 @@ const Programs = ({
   return (
     <Container className={classes.container}>
       <Box component="div">
-        {isAuthenticated ? (
+        {isAuthenticated && (
           <Button
             variant="outlined"
             fullWidth
             className={classes.btnAdd}
-            onClick={() => history.push("/programs/addProgram")}
+            onClick={() => history.push("/addProgram")}
           >
             <AddIcon className={classes.iconAdd} />
             <Typography>Добавить Программу</Typography>
           </Button>
-        ) : null}
+        )}
         {loading ? (
           <Box component="div" className={classes.loading}>
             <CircularProgress />
           </Box>
         ) : (
-          programs.map((program) => (
-            <ProgramItem program={program} key={program._id} />
-          ))
+          <Fragment>
+            <Alert id="alert" />
+            {programs.map((program) => (
+              <ProgramItem
+                key={program._id}
+                program={program}
+                isAuthenticated={isAuthenticated}
+                auth={auth}
+              />
+            ))}
+          </Fragment>
         )}
       </Box>
     </Container>
@@ -80,11 +90,13 @@ const Programs = ({
 Programs.propTypes = {
   isAuthenticated: PropTypes.bool.isRequired,
   getPrograms: PropTypes.func.isRequired,
+  auth: PropTypes.object.isRequired,
 };
 
 const mapStateToProps = (state) => ({
   isAuthenticated: state.auth.auth.isAuthenticated,
   programs: state.programs.programs,
+  auth: state.auth.auth,
 });
 
 export default connect(mapStateToProps, { getPrograms })(Programs);

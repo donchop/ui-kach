@@ -2,6 +2,7 @@ import {
   GET_PROGRAMS,
   ADD_PROGRAM,
   GET_PROGRAM,
+  DELETE_PROGRAM,
   ADD_COMMENT,
   REMOVE_COMMENT,
 } from "../constants/actionTypes";
@@ -24,6 +25,12 @@ export default (state = initialState, { type, payload }) => {
         programs: [payload, ...state.programs],
         loading: false,
       };
+    case DELETE_PROGRAM:
+      return {
+        ...state,
+        programs: state.programs.filter((program) => program._id !== payload),
+        loading: false,
+      };
     case ADD_COMMENT:
       return {
         ...state,
@@ -35,7 +42,7 @@ export default (state = initialState, { type, payload }) => {
         ...state,
         program: {
           ...state.program,
-          comments: payload
+          comments: payload,
         },
         loading: false,
       };

@@ -12,8 +12,9 @@ import Main from "./pages/main/";
 import Programs from "./pages/programs/";
 import Diets from "./pages/diets/";
 import Exercises from "./pages/exercises/";
-import AddProgram from "./pages/programs/components/AddProgram";
-import Program from "./pages/programs/components/Program";
+import AddProgram from "./pages/addProgram/";
+import EditProgram from "./pages/editProgram/";
+import Program from "./pages/program";
 import Auth from "./pages/auth/";
 
 const App = () => {
@@ -35,8 +36,9 @@ const App = () => {
               <Route path="/diets" component={Diets} exact />
               <Route path="/exercises" component={Exercises} exact />
               <Route path="/auth" component={Auth} exact />
+              <Route path="/editProgram/:id" component={EditProgram} exact />
               <PrivateRoute
-                path="/programs/addProgram"
+                path="/addProgram"
                 component={AddProgram}
                 exact
               />
