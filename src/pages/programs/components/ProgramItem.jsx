@@ -23,6 +23,16 @@ const useStyle = makeStyles({
     marginTop: "10%",
     boxShadow: "none",
   },
+  cardHeader: {
+    display: "flex",
+    justifyContent: "space-between",
+    marginBottom: "8px",
+  },
+  userName: {
+    fontSize: 16,
+    fontWeight: 600,
+    color: "#ff9908",
+  },
   title: {
     fontSize: 40,
     fontWeight: 600,
@@ -88,8 +98,17 @@ const ProgramItem = ({ program, isAuthenticated, deleteProgram, auth }) => {
 
   return (
     <Card className={classes.card}>
-      <img className={classes.imageProgram} src={program.imgUrl} alt="" />
       <CardContent>
+        <Box component="div" className={classes.cardHeader}>
+          <Typography variant="body1" className={classes.userName}>
+            {program.name}
+            {"  "}
+          </Typography>
+          <Typography variant="body1" color="textSecondary" component="span">
+            <Moment format="DD-MM-YYYY">{program.date}</Moment>
+          </Typography>
+        </Box>
+        <img className={classes.imageProgram} src={program.imgUrl} alt="" />
         <Typography
           className={classes.title}
           variant="h5"
@@ -98,15 +117,6 @@ const ProgramItem = ({ program, isAuthenticated, deleteProgram, auth }) => {
         >
           {program.title}
         </Typography>
-        <Typography
-          className={classes.date}
-          variant="body1"
-          component="h1"
-          align="center"
-        >
-          <Moment format="DD-MM-YYYY">{program.date}</Moment>
-        </Typography>
-
         <Typography
           className={classes.description}
           variant="body1"
