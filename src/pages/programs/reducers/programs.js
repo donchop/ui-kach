@@ -5,6 +5,7 @@ import {
   DELETE_PROGRAM,
   ADD_COMMENT,
   REMOVE_COMMENT,
+  EDIT_PROGRAM,
 } from "../constants/actionTypes";
 
 const initialState = {
@@ -17,6 +18,7 @@ export default (state = initialState, { type, payload }) => {
   switch (type) {
     case GET_PROGRAMS:
       return { ...state, programs: payload, loading: false };
+    case EDIT_PROGRAM:
     case GET_PROGRAM:
       return { ...state, program: payload, loading: false };
     case ADD_PROGRAM:

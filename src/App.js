@@ -9,13 +9,14 @@ import setAuthToken from "./utils/setAuthToken";
 import { loadUser } from "./pages/auth/actions/auth";
 import Header from "./components/Header";
 import Main from "./pages/main/";
+import Auth from "./pages/auth/";
 import Programs from "./pages/programs/";
 import Diets from "./pages/diets/";
 import Exercises from "./pages/exercises/";
+import MuscleGroup from "./pages/exercises/components/MuscleGroup";
 import AddProgram from "./pages/addProgram/";
 import EditProgram from "./pages/editProgram/";
 import Program from "./pages/program";
-import Auth from "./pages/auth/";
 
 const App = () => {
   useEffect(() => {
@@ -35,6 +36,7 @@ const App = () => {
               <Route path="/programs/:id" component={Program} exact />
               <Route path="/diets" component={Diets} exact />
               <Route path="/exercises" component={Exercises} exact />
+              <Route path="/exercises/musclegroup/:id" component={MuscleGroup} exact />
               <Route path="/auth" component={Auth} exact />
               <Route path="/editProgram/:id" component={EditProgram} exact />
               <PrivateRoute

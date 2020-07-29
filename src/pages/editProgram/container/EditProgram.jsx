@@ -2,7 +2,7 @@ import React, { useState, useEffect, Fragment } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { useParams } from "react-router-dom";
-import { addProgram, getProgram } from "../../programs/actions/program";
+import { editProgram, getProgram } from "../../programs/actions/program";
 import {
   TextField,
   makeStyles,
@@ -73,26 +73,29 @@ const useStyles = makeStyles((theme) => ({
     },
   },
 }));
+const initialState = { title: "", imgUrl: "", text: "" };
 
 const EditProgram = ({
-  addProgram,
+  editProgram,
   getProgram,
   programs: { program, loading },
 }) => {
   const classes = useStyles();
   const { id } = useParams();
 
-  const [form, setForm] = useState({ title: "", imgUrl: "", text: "" });
+  const [form, setForm] = useState(initialState);
   const { title, imgUrl, text } = form;
 
   useEffect(() => {
-    getProgram(id);
-    setForm({
-      title: loading || !program.title ? "" : program.title,
-      imgUrl: loading || !program.imgUrl ? "" : program.imgUrl,
-      text: loading || !program.text ? "" : program.text,
-    });
-  }, [getProgram, id]);
+    if (!program) getProgram(id);
+    if (!loading && program) {
+      const programData = { ...initialState };
+      for (const key in program) {
+        if (key in programData) programData[key] = program[key];
+      }
+      setForm(programData);
+    }
+  }, [getProgram, id, loading, program]);
 
   const changeFormHandler = (event) => {
     setForm({
@@ -101,8 +104,8 @@ const EditProgram = ({
     });
   };
   const submitForm = () => {
-    addProgram(form);
-    setForm({ title: "", imgUrl: "", text: "" });
+    editProgram(id,form);
+    setForm(initialState);
   };
   console.log(form);
   return (
@@ -153,7 +156,7 @@ const EditProgram = ({
   );
 };
 EditProgram.propTypes = {
-  addProgram: PropTypes.func.isRequired,
+  editProgram: PropTypes.func.isRequired,
   getProgram: PropTypes.func.isRequired,
   programs: PropTypes.object.isRequired,
 };
@@ -162,6 +165,6 @@ const mapStateToProps = (state) => ({
   programs: state.programs.programs,
 });
 
-export default connect(mapStateToProps, { addProgram, getProgram })(
+export default connect(mapStateToProps, { editProgram, getProgram })(
   EditProgram
 );
