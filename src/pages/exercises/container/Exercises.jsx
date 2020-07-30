@@ -9,7 +9,9 @@ import {
   Card,
   CardContent,
   CardActionArea,
+  Button,
 } from "@material-ui/core";
+import AddIcon from "@material-ui/icons/Add";
 
 import legsImg from "../images/legs.svg";
 import chestImg from "../images/chest.svg";
@@ -25,7 +27,20 @@ const useStyle = makeStyles({
     background: "#1d1f2a",
     width: "100%",
   },
-  blockConrainer: {
+  btnAddContainer: {
+    width: "100%",
+  },
+  btnAdd: {
+    border: "2px solid #ff9908",
+    width: "60%",
+    height: "80px",
+    color: "#ff9908",
+    "&:hover": {
+      border: "2px solid #dc3545",
+      color: "#dc3545",
+    },
+  },
+  blockContainer: {
     marginTop: "5%",
   },
   card: {
@@ -53,7 +68,7 @@ const useStyle = makeStyles({
 });
 
 const Exercises = () => {
-  const styles = useStyle();
+  const classes = useStyle();
   const history = useHistory();
   const muscleGroups = [
     { title: "Грудь", imgSrc: chestImg, muscleGroup: "chest" },
@@ -67,34 +82,55 @@ const Exercises = () => {
   ];
 
   return (
-    <Box component="div" className={styles.mainContainer}>
-      <Container className={styles.blockConrainer}>
-        <Grid container direction="row" justify="center">
-          {muscleGroups.map((muscle, index) => (
-            <Card className={styles.card} key={index}>
-              <CardActionArea
-                onClick={() => history.push(`/exercises/musclegroup/${muscle.muscleGroup}`)}
-                className={styles.cardArea}
-              >
-                <img
-                  className={styles.imageMuscle}
-                  src={muscle.imgSrc}
-                  alt="imgDietSvg"
-                />
-                <CardContent>
-                  <Typography
-                    gutterBottom
-                    variant="h5"
-                    component="h2"
-                    align="center"
-                    className={styles.title}
-                  >
-                    {muscle.title}
-                  </Typography>
-                </CardContent>
-              </CardActionArea>
-            </Card>
-          ))}
+    <Box component="div" className={classes.mainContainer}>
+      <Container className={classes.blockContainer}>
+        <Grid container>
+          <Grid
+            item
+            container
+            justify="center"
+            className={classes.btnAddContainer}
+          >
+            <Button
+              variant="outlined"
+              fullWidth
+              className={classes.btnAdd}
+              onClick={() => history.push("/addExercise")}
+            >
+              <AddIcon className={classes.iconAdd} />
+              <Typography>Добавить Упражнение</Typography>
+            </Button>
+          </Grid>
+
+          <Grid item container direction="row" justify="center">
+            {muscleGroups.map((muscle, index) => (
+              <Card className={classes.card} key={index}>
+                <CardActionArea
+                  onClick={() =>
+                    history.push(`/exercises/${muscle.muscleGroup}`)
+                  }
+                  className={classes.cardArea}
+                >
+                  <img
+                    className={classes.imageMuscle}
+                    src={muscle.imgSrc}
+                    alt="imgDietSvg"
+                  />
+                  <CardContent>
+                    <Typography
+                      gutterBottom
+                      variant="h5"
+                      component="h2"
+                      align="center"
+                      className={classes.title}
+                    >
+                      {muscle.title}
+                    </Typography>
+                  </CardContent>
+                </CardActionArea>
+              </Card>
+            ))}
+          </Grid>
         </Grid>
       </Container>
     </Box>

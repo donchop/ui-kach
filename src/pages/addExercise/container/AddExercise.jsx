@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import { addProgram } from "../../programs/actions/program";
+import { addExercise } from "../../exercises/actions/exercises";
 import {
   TextField,
   makeStyles,
@@ -10,6 +10,7 @@ import {
   TextareaAutosize,
   Button,
   Box,
+  MenuItem,
 } from "@material-ui/core";
 import Alert from "../../../components/alert";
 
@@ -17,10 +18,14 @@ const useStyles = makeStyles((theme) => ({
   container: {
     marginTop: "5%",
   },
-  programBlock: {
+  exerciseBlock: {
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
+  },
+  muscleGroupContainer: {
+    width: "100%",
+    marginLeft: "30%",
   },
   input: {
     marginTop: "20px",
@@ -72,11 +77,11 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const AddProgram = ({ addProgram }) => {
+const AddExercise = ({ addExercise }) => {
   const classes = useStyles();
-  const initialState = { title: "", imgUrl: "", text: "" };
+  const initialState = { muscleGroup: "", name: "", video: "", text: "" };
   const [form, setForm] = useState(initialState);
-  const { title, imgUrl, text } = form;
+  const { muscleGroup, name, video, text } = form;
   const changeFormHandler = (event) => {
     setForm({
       ...form,
@@ -85,34 +90,61 @@ const AddProgram = ({ addProgram }) => {
   };
 
   const submitForm = () => {
-    addProgram(form);
+    addExercise(form);
     setForm(initialState);
   };
+  const muscleGroupList = [
+    { name: "грудь", value: "chest" },
+    { name: "плечи", value: "shoulders" },
+    { name: "спина", value: "back" },
+    { name: "бицепс", value: "biceps" },
+    { name: "трицепс", value: "triceps" },
+    { name: "предплечья", value: "forearm" },
+    { name: "ноги", value: "legs" },
+    { name: "грудь", value: "press" },
+  ];
 
   return (
     <Container className={classes.container}>
-      <Grid className={classes.programBlock}>
+      <Grid className={classes.exerciseBlock}>
         <Box component="div">
           <Alert />
         </Box>
+        <Box component="div" className={classes.muscleGroupContainer}>
+          <TextField
+            select
+            label="Группа мышц"
+            name="muscleGroup"
+            value={muscleGroup}
+            onChange={(event) => changeFormHandler(event)}
+            helperText="Выберите группу мышц"
+          >
+            {muscleGroupList.map((muscleGroupItem, index) => (
+              <MenuItem key={index} value={muscleGroupItem.value}>
+                {muscleGroupItem.name}
+              </MenuItem>
+            ))}
+          </TextField>
+        </Box>
         <TextField
-          label="Название программы тренировок"
+          className={classes.input}
+          label="Название упражнения"
           variant="outlined"
-          name="title"
-          value={title}
+          name="name"
+          value={name}
           onChange={(event) => changeFormHandler(event)}
         />
         <TextField
           className={classes.input}
-          label="Ссылка на заглавную картинку"
+          label="Ссылка на видео выполнения упражнения"
           variant="outlined"
-          name="imgUrl"
-          value={imgUrl}
+          name="video"
+          value={video}
           onChange={(event) => changeFormHandler(event)}
         />
         <TextareaAutosize
           className={classes.textArea}
-          placeholder=" Описание программы"
+          placeholder=" Описание выполнения упражнения"
           rows={15}
           name="text"
           value={text}
@@ -125,8 +157,8 @@ const AddProgram = ({ addProgram }) => {
     </Container>
   );
 };
-AddProgram.propTypes = {
-  addProgram: PropTypes.func.isRequired,
+AddExercise.propTypes = {
+  addExercise: PropTypes.func.isRequired,
 };
 
-export default connect(null, { addProgram })(AddProgram);
+export default connect(null, { addExercise })(AddExercise);

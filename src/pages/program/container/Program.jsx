@@ -13,10 +13,10 @@ import {
   CardActions,
   Box,
   TextareaAutosize,
+  CircularProgress,
 } from "@material-ui/core";
 import AddIcon from "@material-ui/icons/Add";
-import CircularProgress from "@material-ui/core/CircularProgress";
-import Comment from "./Comment";
+import Comment from "../components/Comment";
 import Alert from "../../../components/alert";
 import { getProgram, addComment } from "../../programs/actions/program";
 

@@ -2,7 +2,7 @@ import React, { useState, useEffect, Fragment } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { useParams } from "react-router-dom";
-import { editProgram, getProgram } from "../../programs/actions/program";
+import { editExercise, getExercise } from "../../exercises/actions/exercises";
 import {
   TextField,
   makeStyles,
@@ -12,6 +12,7 @@ import {
   Button,
   Box,
   CircularProgress,
+  MenuItem,
 } from "@material-ui/core";
 import Alert from "../../../components/alert";
 
@@ -19,10 +20,14 @@ const useStyles = makeStyles((theme) => ({
   container: {
     marginTop: "5%",
   },
-  programBlock: {
+  exerciseBlock: {
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
+  },
+  muscleGroupContainer: {
+    width: "100%",
+    marginLeft: "30%",
   },
   input: {
     marginTop: "20px",
@@ -73,30 +78,25 @@ const useStyles = makeStyles((theme) => ({
     },
   },
 }));
-const initialState = { title: "", imgUrl: "", text: "" };
+const initialState = { muscleGroup: "", name: "", video: "", text: "" };
 
-const EditProgram = ({
-  editProgram,
-  getProgram,
-  programs: { program, loading },
-}) => {
+const EditExercise = ({ editExercise, getExercise, exercise, loading }) => {
   const classes = useStyles();
   const { id } = useParams();
 
   const [form, setForm] = useState(initialState);
-  const { title, imgUrl, text } = form;
+  const { muscleGroup, name, video, text } = form;
 
   useEffect(() => {
-    if (!program) getProgram(id);
-    if (!loading && program) {
-      const programData = { ...initialState };
-      for (const key in program) {
-        if (key in programData) programData[key] = program[key];
+    if (!exercise) getExercise(id);
+    if (!loading && exercise) {
+      const exerciseData = { ...initialState };
+      for (const key in exercise) {
+        if (key in exerciseData) exerciseData[key] = exercise[key];
       }
-      setForm(programData);
+      setForm(exerciseData);
     }
-  }, [getProgram, id, loading, program]);
-
+  }, [getExercise, id, loading, exercise]);
   const changeFormHandler = (event) => {
     setForm({
       ...form,
@@ -104,35 +104,62 @@ const EditProgram = ({
     });
   };
   const submitForm = () => {
-    editProgram(id, form);
+    editExercise(id, form);
     setForm(initialState);
   };
+
+  const muscleGroupList = [
+    { name: "грудь", value: "chest" },
+    { name: "плечи", value: "shoulders" },
+    { name: "спина", value: "back" },
+    { name: "бицепс", value: "biceps" },
+    { name: "трицепс", value: "triceps" },
+    { name: "предплечья", value: "forearm" },
+    { name: "ноги", value: "legs" },
+    { name: "грудь", value: "press" },
+  ];
   return (
     <Container className={classes.container}>
       <Box component="div">
         <Alert />
       </Box>
-      <Grid className={classes.programBlock}>
-        {loading || program === null ? (
+      <Grid className={classes.exerciseBlock}>
+        {loading || exercise === null ? (
           <Box component="div" className={classes.loading}>
             <CircularProgress />
           </Box>
         ) : (
           <Fragment>
+            <Box component="div" className={classes.muscleGroupContainer}>
+              <TextField
+                select
+                label="Группа мышц"
+                name="muscleGroup"
+                value={muscleGroup}
+                onChange={(event) => changeFormHandler(event)}
+                helperText="Выберите группу мышц"
+              >
+                {muscleGroupList.map((muscleGroupItem, index) => (
+                  <MenuItem key={index} value={muscleGroupItem.value}>
+                    {muscleGroupItem.name}
+                  </MenuItem>
+                ))}
+              </TextField>
+            </Box>
             <TextField
               className={classes.input}
               label="Название программы тренировок"
               variant="outlined"
-              name="title"
-              value={title}
+              name="name"
+              value={name}
               onChange={(event) => changeFormHandler(event)}
             />
             <TextField
               className={classes.input}
               label="Ссылка на заглавную картинку"
               variant="outlined"
-              name="imgUrl"
-              value={imgUrl}
+              name="video"
+              value={video}
               onChange={(event) => changeFormHandler(event)}
             />
             <TextareaAutosize
@@ -152,16 +179,18 @@ const EditProgram = ({
     </Container>
   );
 };
-EditProgram.propTypes = {
-  editProgram: PropTypes.func.isRequired,
-  getProgram: PropTypes.func.isRequired,
-  programs: PropTypes.object.isRequired,
+EditExercise.propTypes = {
+  editExercise: PropTypes.func.isRequired,
+  getExercise: PropTypes.func.isRequired,
+  exercise: PropTypes.object.isRequired,
+  loading: PropTypes.bool.isRequired,
 };
 
 const mapStateToProps = (state) => ({
-  programs: state.programs.programs,
+  exercise: state.exercises.exercises.listItem,
+  loading: state.exercises.exercises.loading,
 });
 
-export default connect(mapStateToProps, { editProgram, getProgram })(
-  EditProgram
+export default connect(mapStateToProps, { editExercise, getExercise })(
+  EditExercise
 );

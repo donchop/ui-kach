@@ -4,6 +4,7 @@ import {
   EDIT_EXERCISE,
   GET_EXERCISE,
   DELETE_EXERCISE,
+  EMPTY_EXERCISES,
 } from "../constants/actionTypes";
 
 const initialState = {
@@ -14,6 +15,8 @@ const initialState = {
 
 export default (state = initialState, { type, payload }) => {
   switch (type) {
+    case EMPTY_EXERCISES:
+      return { ...initialState };
     case GET_EXERCISES:
       return { ...state, list: payload, loading: false };
     case ADD_EXERCISE:

@@ -10,13 +10,16 @@ import { loadUser } from "./pages/auth/actions/auth";
 import Header from "./components/Header";
 import Main from "./pages/main/";
 import Auth from "./pages/auth/";
-import Programs from "./pages/programs/";
 import Diets from "./pages/diets/";
-import Exercises from "./pages/exercises/";
-import MuscleGroup from "./pages/exercises/components/MuscleGroup";
+import Programs from "./pages/programs/";
+import Program from "./pages/program";
 import AddProgram from "./pages/addProgram/";
 import EditProgram from "./pages/editProgram/";
-import Program from "./pages/program";
+import Exercises from "./pages/exercises/";
+import Exercise from "./pages/exercise/";
+import MuscleGroup from "./pages/exercises/components/MuscleGroup";
+import AddExercise from "./pages/addExercise/";
+import EditExercise from "./pages/editExercise/";
 
 const App = () => {
   useEffect(() => {
@@ -36,12 +39,27 @@ const App = () => {
               <Route path="/programs/:id" component={Program} exact />
               <Route path="/diets" component={Diets} exact />
               <Route path="/exercises" component={Exercises} exact />
-              <Route path="/exercises/musclegroup/:id" component={MuscleGroup} exact />
+              <Route
+                path="/exercises/musclegroup/:id"
+                component={Exercise}
+                exact
+              />
+              <Route
+                path="/exercises/:musclegroup"
+                component={MuscleGroup}
+                exact
+              />
               <Route path="/auth" component={Auth} exact />
-              <Route path="/editProgram/:id" component={EditProgram} exact />
               <PrivateRoute
-                path="/addProgram"
-                component={AddProgram}
+                path="/editProgram/:id"
+                component={EditProgram}
+                exact
+              />
+              <Route path="/editexercise/:id" component={EditExercise} exact />
+              <PrivateRoute path="/addProgram" component={AddProgram} exact />
+              <Route
+                path="/addexercise"
+                component={AddExercise}
                 exact
               />
               <Redirect to="/" />
