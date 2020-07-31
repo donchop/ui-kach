@@ -5,6 +5,7 @@ import { Provider } from "react-redux";
 import store from "./store";
 
 import PrivateRoute from "./components/routing/privateRoute";
+import AdminRoute from "./components/routing/adminRoute";
 import setAuthToken from "./utils/setAuthToken";
 import { loadUser } from "./pages/auth/actions/auth";
 import Header from "./components/Header";
@@ -55,9 +56,9 @@ const App = () => {
                 component={EditProgram}
                 exact
               />
-              <Route path="/editexercise/:id" component={EditExercise} exact />
               <PrivateRoute path="/addProgram" component={AddProgram} exact />
-              <Route
+              <AdminRoute path="/editexercise/:id" component={EditExercise} exact />
+              <AdminRoute
                 path="/addexercise"
                 component={AddExercise}
                 exact

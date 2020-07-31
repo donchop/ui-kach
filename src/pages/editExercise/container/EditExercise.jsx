@@ -182,7 +182,6 @@ const EditExercise = ({ editExercise, getExercise, exercise, loading }) => {
 EditExercise.propTypes = {
   editExercise: PropTypes.func.isRequired,
   getExercise: PropTypes.func.isRequired,
-  exercise: PropTypes.object.isRequired,
   loading: PropTypes.bool.isRequired,
 };
 

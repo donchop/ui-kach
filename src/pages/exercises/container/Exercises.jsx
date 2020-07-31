@@ -1,4 +1,5 @@
 import React from "react";
+import { connect } from "react-redux";
 import { useHistory } from "react-router-dom";
 import {
   Grid,
@@ -67,7 +68,7 @@ const useStyle = makeStyles({
   },
 });
 
-const Exercises = () => {
+const Exercises = ({ user }) => {
   const classes = useStyle();
   const history = useHistory();
   const muscleGroups = [
@@ -85,22 +86,24 @@ const Exercises = () => {
     <Box component="div" className={classes.mainContainer}>
       <Container className={classes.blockContainer}>
         <Grid container>
-          <Grid
-            item
-            container
-            justify="center"
-            className={classes.btnAddContainer}
-          >
-            <Button
-              variant="outlined"
-              fullWidth
-              className={classes.btnAdd}
-              onClick={() => history.push("/addExercise")}
+          {user !== null && user.fullRights && (
+            <Grid
+              item
+              container
+              justify="center"
+              className={classes.btnAddContainer}
             >
-              <AddIcon className={classes.iconAdd} />
-              <Typography>Добавить Упражнение</Typography>
-            </Button>
-          </Grid>
+              <Button
+                variant="outlined"
+                fullWidth
+                className={classes.btnAdd}
+                onClick={() => history.push("/addExercise")}
+              >
+                <AddIcon className={classes.iconAdd} />
+                <Typography>Добавить Упражнение</Typography>
+              </Button>
+            </Grid>
+          )}
 
           <Grid item container direction="row" justify="center">
             {muscleGroups.map((muscle, index) => (
@@ -137,4 +140,8 @@ const Exercises = () => {
   );
 };
 
-export default Exercises;
+const mapStateToProps = (state) => ({
+  user: state.auth.auth.user,
+});
+
+export default connect(mapStateToProps)(Exercises);

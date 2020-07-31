@@ -138,11 +138,11 @@ const ProgramItem = ({ program, isAuthenticated, deleteProgram, auth }) => {
         </Button>
         {isAuthenticated && auth.user._id === program.user && (
           <Box component="div">
-            <IconButton className={classes.editIconContainer}>
-              <EditIcon
-                className={classes.editIcon}
-                onClick={() => history.push(`/editProgram/${program._id}`)}
-              />
+            <IconButton
+              className={classes.editIconContainer}
+              onClick={() => history.push(`/editProgram/${program._id}`)}
+            >
+              <EditIcon className={classes.editIcon} />
             </IconButton>
             <IconButton
               className={classes.deleteIconContainer}

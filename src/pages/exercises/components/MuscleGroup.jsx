@@ -55,7 +55,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const MuscleGroup = ({ getExercises, deleteExercise, list }) => {
+const MuscleGroup = ({ getExercises, deleteExercise, list, user }) => {
   const { musclegroup } = useParams();
   const classes = useStyles();
   const history = useHistory();
@@ -93,26 +93,28 @@ const MuscleGroup = ({ getExercises, deleteExercise, list }) => {
                   </Typography>
                 }
               />
-              <Box component="div">
-                <IconButton className={classes.editIconContainer}>
-                  <EditIcon
-                    className={classes.editIcon}
+              {user !== null && user.fullRights && (
+                <Box component="div">
+                  <IconButton className={classes.editIconContainer}    onClick={(e) => {
+                        e.stopPropagation();
+                        history.push(`/editExercise/${listItem._id}`);
+                      }}>
+                    <EditIcon
+                      className={classes.editIcon}
+                  
+                    />
+                  </IconButton>
+                  <IconButton
+                    className={classes.deleteIconContainer}
                     onClick={(e) => {
                       e.stopPropagation();
-                      history.push(`/editExercise/${listItem._id}`);
+                      deleteProgramHandler(listItem._id);
                     }}
-                  />
-                </IconButton>
-                <IconButton
-                  className={classes.deleteIconContainer}
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    deleteProgramHandler(listItem._id);
-                  }}
-                >
-                  <DeleteIcon className={classes.deleteIcon} />
-                </IconButton>
-              </Box>
+                  >
+                    <DeleteIcon className={classes.deleteIcon} />
+                  </IconButton>
+                </Box>
+              )}
             </ListItem>
           ))}
         </List>
@@ -128,6 +130,7 @@ MuscleGroup.propTypes = {
 
 const mapStateToProps = (state) => ({
   list: state.exercises.exercises.list,
+  user: state.auth.auth.user,
 });
 
 export default connect(mapStateToProps, { getExercises, deleteExercise })(

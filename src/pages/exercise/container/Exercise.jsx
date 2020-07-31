@@ -50,7 +50,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Exercise = ({ loading, exercise, getExercise }) => {
+const Exercise = ({ loading, exercise, getExercise, user }) => {
   const classes = useStyles();
   const { id } = useParams();
 
@@ -115,6 +115,7 @@ const mapStateToProps = (state) => ({
   exercise: state.exercises.exercises.listItem,
   loading: state.exercises.exercises.loading,
 });
+
 
 export default connect(mapStateToProps, {
   getExercise,

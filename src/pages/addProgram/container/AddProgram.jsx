@@ -100,6 +100,7 @@ const AddProgram = ({ addProgram }) => {
           variant="outlined"
           name="title"
           value={title}
+          className={classes.input}
           onChange={(event) => changeFormHandler(event)}
         />
         <TextField
