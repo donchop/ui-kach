@@ -112,9 +112,7 @@ const EditExercise = ({ editExercise, getExercise, exercise, loading }) => {
     { name: "грудь", value: "chest" },
     { name: "плечи", value: "shoulders" },
     { name: "спина", value: "back" },
-    { name: "бицепс", value: "biceps" },
-    { name: "трицепс", value: "triceps" },
-    { name: "предплечья", value: "forearm" },
+    { name: "руки", value: "arms" },
     { name: "ноги", value: "legs" },
     { name: "грудь", value: "press" },
   ];

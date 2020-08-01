@@ -95,14 +95,14 @@ const MuscleGroup = ({ getExercises, deleteExercise, list, user }) => {
               />
               {user !== null && user.fullRights && (
                 <Box component="div">
-                  <IconButton className={classes.editIconContainer}    onClick={(e) => {
-                        e.stopPropagation();
-                        history.push(`/editExercise/${listItem._id}`);
-                      }}>
-                    <EditIcon
-                      className={classes.editIcon}
-                  
-                    />
+                  <IconButton
+                    className={classes.editIconContainer}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      history.push(`/editExercise/${listItem._id}`);
+                    }}
+                  >
+                    <EditIcon className={classes.editIcon} />
                   </IconButton>
                   <IconButton
                     className={classes.deleteIconContainer}

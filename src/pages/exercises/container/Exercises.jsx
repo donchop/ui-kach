@@ -18,9 +18,7 @@ import legsImg from "../images/legs.svg";
 import chestImg from "../images/chest.svg";
 import shouldersImg from "../images/shoulders.svg";
 import backImg from "../images/back.svg";
-import bicepsImg from "../images/biceps.svg";
-import tricepsImg from "../images/triceps.svg";
-import forearmImg from "../images/forearm.svg";
+import armsImg from "../images/arms.svg";
 import pressImg from "../images/press.svg";
 
 const useStyle = makeStyles({
@@ -75,9 +73,7 @@ const Exercises = ({ user }) => {
     { title: "Грудь", imgSrc: chestImg, muscleGroup: "chest" },
     { title: "Плечи", imgSrc: shouldersImg, muscleGroup: "shoulders" },
     { title: "Спина", imgSrc: backImg, muscleGroup: "back" },
-    { title: "Бицепс", imgSrc: bicepsImg, muscleGroup: "biceps" },
-    { title: "Трипецс", imgSrc: tricepsImg, muscleGroup: "triceps" },
-    { title: "Предплечье", imgSrc: forearmImg, muscleGroup: "forearm" },
+    { title: "Руки", imgSrc: armsImg, muscleGroup: "arms" },
     { title: "Ноги", imgSrc: legsImg, muscleGroup: "legs" },
     { title: "Пресс", imgSrc: pressImg, muscleGroup: "press" },
   ];

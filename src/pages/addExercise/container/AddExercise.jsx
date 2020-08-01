@@ -11,6 +11,10 @@ import {
   Button,
   Box,
   MenuItem,
+  FormControl,
+  InputLabel,
+  Select,
+  ListSubheader,
 } from "@material-ui/core";
 import Alert from "../../../components/alert";
 
@@ -22,6 +26,9 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
+  },
+  formControl: {
+    width: "150px",
   },
   muscleGroupContainer: {
     width: "100%",
@@ -81,7 +88,7 @@ const AddExercise = ({ addExercise }) => {
   const classes = useStyles();
   const initialState = { muscleGroup: "", name: "", video: "", text: "" };
   const [form, setForm] = useState(initialState);
-  const { muscleGroup, name, video, text } = form;
+  const { name, video, text } = form;
   const changeFormHandler = (event) => {
     setForm({
       ...form,
@@ -93,16 +100,33 @@ const AddExercise = ({ addExercise }) => {
     addExercise(form);
     setForm(initialState);
   };
-  const muscleGroupList = [
-    { name: "грудь", value: "chest" },
-    { name: "плечи", value: "shoulders" },
-    { name: "спина", value: "back" },
-    { name: "бицепс", value: "biceps" },
-    { name: "трицепс", value: "triceps" },
-    { name: "предплечья", value: "forearm" },
-    { name: "ноги", value: "legs" },
-    { name: "грудь", value: "press" },
-  ];
+
+  // const muscleGroupList2 = [
+  //   { name: "грудь", value: "chest" },
+  //   { name: "плечи", value: "shoulders" },
+  //   { name: "спина", value: "back" },
+  //   { name: "руки", value: "arms" },
+  //   { name: "ноги", value: "legs" },
+  //   { name: "грудь", value: "press" },
+  // ];
+  // const muscleGroupList = [
+  //   { name: "грудь", value: "chest" },
+  //   { name: "Шея", value: "shoulders" },
+  //   { name: "Трапеция", value: "trapezius" },
+  //   { name: "Широчайшие", value: "latissimus" },
+  //   { name: "Поясница", value: "lowerback" },
+  //   { name: "Передняя дельта", value: "frontdelt" },
+  //   { name: "Средняя дельта", value: "middledelt" },
+  //   { name: "Задняя дельта", value: "reardelt" },
+  //   { name: "Бицепс", value: "biceps" },
+  //   { name: "Трицепс", value: "triceps" },
+  //   { name: "Предплечье", value: "forearm" },
+  //   { name: "Ягодицы", value: "buttocks" },
+  //   { name: "Четырехглавая", value: "quadriceps" },
+  //   { name: "Двуглавая", value: "bicepsfemoris" },
+  //   { name: "Икроножные", value: "calf" },
+  //   { name: "Пресс", value: "press" },
+  // ];
 
   return (
     <Container className={classes.container}>
@@ -111,7 +135,40 @@ const AddExercise = ({ addExercise }) => {
           <Alert />
         </Box>
         <Box component="div" className={classes.muscleGroupContainer}>
-          <TextField
+          <FormControl className={classes.formControl}>
+            <InputLabel htmlFor="grouped-select">Группа мышц</InputLabel>
+            <Select
+              defaultValue=""
+              id="grouped-select"
+              name="muscleGroup"
+              onChange={(event) => changeFormHandler(event)}
+            >
+              <MenuItem value="chest">Грудь</MenuItem>
+              <ListSubheader>Спина</ListSubheader>
+              <MenuItem value="shoulders">Шея</MenuItem>
+              <MenuItem value="trapezius">Трапеция</MenuItem>
+              <MenuItem value="latissimus">Широчайшие</MenuItem>
+              <MenuItem value="lowerback">Поясница</MenuItem>
+              <ListSubheader>Плечи</ListSubheader>
+              <MenuItem value="frontdelt">Передняя дельта</MenuItem>
+              <MenuItem value="middledelt">Средняя дельта</MenuItem>
+              <MenuItem value="reardelt">Задняя дельта</MenuItem>
+              <ListSubheader>Руки</ListSubheader>
+              <MenuItem value="biceps">Бицепс</MenuItem>
+              <MenuItem value="triceps">Трицепс</MenuItem>
+              <MenuItem value="forearm">Предплечье</MenuItem>
+              <ListSubheader>Ноги</ListSubheader>
+              <MenuItem value="buttocks">Ягодицы</MenuItem>
+              <MenuItem value="quadriceps">Четырехглавыя</MenuItem>
+              <MenuItem value="bicepsfemoris">Двуглавая</MenuItem>
+              <MenuItem value="calf">Икроножные</MenuItem>
+              <ListSubheader></ListSubheader>
+              <MenuItem value="press">Пресс</MenuItem>
+            </Select>
+          </FormControl>
+     
+
+          {/* <TextField
             select
             label="Группа мышц"
             name="muscleGroup"
@@ -119,12 +176,14 @@ const AddExercise = ({ addExercise }) => {
             onChange={(event) => changeFormHandler(event)}
             helperText="Выберите группу мышц"
           >
-            {muscleGroupList.map((muscleGroupItem, index) => (
+            {muscleGroupList2.map((muscleGroupItem, index) => (
               <MenuItem key={index} value={muscleGroupItem.value}>
                 {muscleGroupItem.name}
               </MenuItem>
             ))}
-          </TextField>
+          </TextField> */}
+
+           
         </Box>
         <TextField
           className={classes.input}
